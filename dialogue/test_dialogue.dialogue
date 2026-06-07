@@ -1,0 +1,7 @@
+~ start
+Ringmaster: [[Hi|Hey|Howdy]] Friend, can you help me beat up these \{paperclips\}?.
+- Sure!
+	Ringmaster: Hoorah!
+- Nope
+	Ringmaster: Oh.[wait=0.2].[wait=0.2].[wait=1] okay. => END
+=> END

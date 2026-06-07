@@ -1,0 +1,8 @@
+[gd_resource type="Environment" format=3 uid="uid://cp4ap27w32olt"]
+
+[resource]
+background_energy_multiplier = 0.1
+ambient_light_color = Color(0.69225734, 0.44803435, 0.2750218, 1)
+ambient_light_energy = 0.25
+reflected_light_source = 1
+fog_light_color = Color(0.09948314, 0.112274684, 0.13217887, 1)

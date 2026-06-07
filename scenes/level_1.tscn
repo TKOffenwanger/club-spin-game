@@ -1,0 +1,170 @@
+[gd_scene format=3 uid="uid://bq0sg20byrfke"]
+
+[ext_resource type="Script" uid="uid://bmgytvffnf8cx" path="res://scripts/controller.gd" id="1_4nkto"]
+[ext_resource type="Environment" uid="uid://cp4ap27w32olt" path="res://Circus.tres" id="1_5xbjy"]
+[ext_resource type="Script" uid="uid://bx0vneqgurn3o" path="res://scripts/player_light.gd" id="2_4nkto"]
+[ext_resource type="Script" uid="uid://dkghf4v1l001g" path="res://scripts/player.gd" id="3_fcfvj"]
+[ext_resource type="Texture2D" uid="uid://xbiscpmxvju" path="res://icon.svg" id="4_pa8r4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rka8t"]
+albedo_color = Color(0.17093545, 0.11301013, 0.106103174, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5hph3"]
+material = SubResource("StandardMaterial3D_rka8t")
+size = Vector2(30, 30)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_rka8t"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_j7kpp"]
+inner_radius = 15.0
+outer_radius = 17.0
+rings = 12
+ring_segments = 3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ihfcg"]
+height = 1.0
+radius = 5.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ihfcg"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rka8t"]
+radius = 0.1
+height = 1.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ihfcg"]
+radius = 0.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5xbjy"]
+radius = 5.5
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4nkto"]
+height = 1.5
+
+[node name="Level1" type="Node3D" unique_id=1333467079]
+script = ExtResource("1_4nkto")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=570779283]
+environment = ExtResource("1_5xbjy")
+
+[node name="World" type="Node3D" parent="." unique_id=1589444594]
+
+[node name="Floor" type="MeshInstance3D" parent="World" unique_id=1927780039]
+mesh = SubResource("PlaneMesh_5hph3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="World/Floor" unique_id=1671206915]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Floor/StaticBody3D" unique_id=1710308257]
+shape = SubResource("WorldBoundaryShape3D_rka8t")
+debug_fill = false
+
+[node name="Ring" type="MeshInstance3D" parent="World" unique_id=669690546]
+mesh = SubResource("TorusMesh_j7kpp")
+
+[node name="Platform" type="CSGCylinder3D" parent="World" unique_id=805864000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44700217, 0)
+radius = 5.0
+height = 1.0
+smooth_faces = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="World/Platform" unique_id=79323684]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Platform/StaticBody3D" unique_id=897991919]
+shape = SubResource("CylinderShape3D_ihfcg")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=162287110]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 9.61507, 0)
+light_energy = 0.5
+spot_range = 15.0
+spot_attenuation = -0.5
+spot_angle_attenuation = 0.07432548
+
+[node name="Player_light" type="SpotLight3D" parent="." unique_id=686499566]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 9.61507, 0)
+light_energy = 0.2
+spot_range = 25.0
+spot_attenuation = -0.5
+spot_angle = 20.0
+spot_angle_attenuation = 0.07432548
+script = ExtResource("2_4nkto")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=91873641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13820755, 0, 13.13376)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("3_fcfvj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=51161283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ihfcg")
+
+[node name="Sprite3D" type="Sprite3D" parent="Player" unique_id=2078443257]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+billboard = 1
+texture = ExtResource("4_pa8r4")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=1447638361]
+transform = Transform3D(1, 0, 0, 0, 0.92366564, 0.38319936, 0, -0.38319936, 0.92366564, 0.015557289, 3.9040394, 4.724231)
+
+[node name="club_holder" type="PinJoint3D" parent="Player" unique_id=270599774]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+node_a = NodePath("../../Club")
+node_b = NodePath("..")
+params/bias = 0.99
+params/impulse_clamp = 0.4
+
+[node name="Club" type="RigidBody3D" parent="." unique_id=61197010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7004949, 0.8615916, 13.13376)
+collision_layer = 9
+angular_damp_mode = 1
+angular_damp = 50.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Club" unique_id=862864449]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_rka8t")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Club" unique_id=573636028]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+radius = 0.3
+height = 1.5
+sides = 5
+cone = true
+smooth_faces = false
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Club" unique_id=1254384213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7202505, 0, 0)
+shape = SubResource("SphereShape3D_ihfcg")
+
+[node name="Dialogue Area" type="Area3D" parent="." unique_id=101755664]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dialogue Area" unique_id=251293555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84479904, 0)
+shape = SubResource("CylinderShape3D_5xbjy")
+
+[node name="Dialogue Prompt" type="Sprite3D" parent="Dialogue Area" unique_id=338121263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7392805, 0)
+visible = false
+texture = ExtResource("4_pa8r4")
+
+[node name="Enemy" type="CharacterBody3D" parent="." unique_id=814930680]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8948913, 0, 2.8480115)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=494411836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("CapsuleShape3D_4nkto")
+
+[node name="Sprite3D" type="Sprite3D" parent="Enemy" unique_id=255349279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6565827, 0)
+modulate = Color(0.9957121, 0, 0.19763213, 1)
+billboard = 2
+texture = ExtResource("4_pa8r4")
+hframes = 2
+
+[connection signal="body_entered" from="Dialogue Area" to="." method="_on_dialogue_area_body_entered"]
+[connection signal="body_exited" from="Dialogue Area" to="." method="_on_dialogue_area_body_exited"]
