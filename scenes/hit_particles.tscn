@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://c7xq2xxj8aiyj"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gu2vf"]
+lifetime_randomness = 1.0
+direction = Vector3(0, 1, 0)
+spread = 50.0
+initial_velocity_min = 1.0
+initial_velocity_max = 5.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_mpbbw"]
+radius = 0.1
+height = 0.2
+radial_segments = 4
+rings = 2
+
+[sub_resource type="Animation" id="Animation_mpbbw"]
+resource_name = "Whap"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4pfba"]
+_data = {
+&"Whap": SubResource("Animation_mpbbw")
+}
+
+[node name="Hit_Particles" type="GPUParticles3D" unique_id=2137419138]
+amount = 15
+lifetime = 0.5
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_gu2vf")
+draw_pass_1 = SubResource("SphereMesh_mpbbw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1585417489]
+libraries/ = SubResource("AnimationLibrary_4pfba")
+autoplay = &"Whap"

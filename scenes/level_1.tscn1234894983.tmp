@@ -5,10 +5,6 @@
 [ext_resource type="Script" uid="uid://bx0vneqgurn3o" path="res://scripts/player_light.gd" id="2_4nkto"]
 [ext_resource type="Script" uid="uid://dkghf4v1l001g" path="res://scripts/player.gd" id="3_fcfvj"]
 [ext_resource type="Texture2D" uid="uid://xbiscpmxvju" path="res://icon.svg" id="4_pa8r4"]
-[ext_resource type="Script" uid="uid://wtbqhlyao4cl" path="res://scripts/club.gd" id="6_e3sih"]
-[ext_resource type="Theme" uid="uid://cid718xkdwd8m" path="res://Theme.tres" id="6_fcfvj"]
-[ext_resource type="Script" uid="uid://dx6ryb3qchb0o" path="res://scripts/dialogue.gd" id="6_pa8r4"]
-[ext_resource type="Script" uid="uid://bxlqca5bmwuqv" path="res://scripts/enemy.gd" id="7_2y5yt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rka8t"]
 albedo_color = Color(0.17093545, 0.11301013, 0.106103174, 1)
@@ -38,20 +34,14 @@ height = 1.5
 [sub_resource type="SphereShape3D" id="SphereShape3D_ihfcg"]
 radius = 0.3
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e3sih"]
-radius = 0.34326172
-height = 1.8604736
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_5xbjy"]
 radius = 5.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4nkto"]
 height = 1.5
 
-[node name="Level1" type="Node3D" unique_id=1333467079 node_paths=PackedStringArray("dialogue_UI", "player_character")]
+[node name="Level1" type="Node3D" unique_id=1333467079]
 script = ExtResource("1_4nkto")
-dialogue_UI = NodePath("Dialogue_UI")
-player_character = NodePath("Player")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=570779283]
 environment = ExtResource("1_5xbjy")
@@ -128,11 +118,9 @@ params/impulse_clamp = 0.4
 
 [node name="Club" type="RigidBody3D" parent="." unique_id=61197010]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7004949, 0.8615916, 13.13376)
-contact_monitor = true
-max_contacts_reported = 3
+collision_layer = 9
 angular_damp_mode = 1
 angular_damp = 50.0
-script = ExtResource("6_e3sih")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Club" unique_id=862864449]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
@@ -150,12 +138,6 @@ smooth_faces = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7202505, 0, 0)
 shape = SubResource("SphereShape3D_ihfcg")
 
-[node name="Hurtbox" type="Area3D" parent="Club" unique_id=29602495]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Club/Hurtbox" unique_id=189250879]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.14556885, 0, 0)
-shape = SubResource("CapsuleShape3D_e3sih")
-
 [node name="Dialogue Area" type="Area3D" parent="." unique_id=101755664]
 collision_layer = 0
 collision_mask = 4
@@ -170,10 +152,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7392805, 0)
 visible = false
 texture = ExtResource("4_pa8r4")
 
-[node name="Enemy" type="CharacterBody3D" parent="." unique_id=824285843]
+[node name="Enemy" type="CharacterBody3D" parent="." unique_id=814930680]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8948913, 0, 2.8480115)
-input_ray_pickable = false
-script = ExtResource("7_2y5yt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=494411836]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
@@ -186,80 +166,5 @@ billboard = 2
 texture = ExtResource("4_pa8r4")
 hframes = 2
 
-[node name="Dialogue_UI" type="Control" parent="." unique_id=1974186924 node_paths=PackedStringArray("dialogue_text_box", "continue_button")]
-visible = false
-layout_mode = 3
-anchor_top = 0.666
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-script = ExtResource("6_pa8r4")
-dialogue_text_box = NodePath("VBoxContainer/Dialogue")
-continue_button = NodePath("BG/Button")
-
-[node name="BG" type="Panel" parent="Dialogue_UI" unique_id=1317076165]
-modulate = Color(1, 1, 1, 0.5176471)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.1
-anchor_right = 0.98
-anchor_bottom = 0.9
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Button" type="Button" parent="Dialogue_UI/BG" unique_id=848971722]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.9
-anchor_top = 0.75
-anchor_right = 0.99
-anchor_bottom = 0.97
-grow_horizontal = 0
-grow_vertical = 0
-text = "Continue"
-icon = ExtResource("4_pa8r4")
-icon_alignment = 1
-expand_icon = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Dialogue_UI" unique_id=1053637125]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.04
-anchor_top = 0.3
-anchor_right = 0.96
-anchor_bottom = 0.8
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Speaker" type="RichTextLabel" parent="Dialogue_UI/VBoxContainer" unique_id=729813581]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
-text = "*Ringmaster*"
-fit_content = true
-
-[node name="Dialogue" type="RichTextLabel" parent="Dialogue_UI/VBoxContainer" unique_id=1651722595]
-layout_mode = 2
-theme = ExtResource("6_fcfvj")
-bbcode_enabled = true
-text = "Can you help me?"
-fit_content = true
-
-[node name="Portrait Parent" type="Control" parent="Dialogue_UI" unique_id=2025106130]
-layout_mode = 1
-anchor_left = 0.1
-anchor_right = 0.1
-offset_right = -83.26401
-offset_bottom = -0.039920807
-
-[node name="Sprite2D" type="Sprite2D" parent="Dialogue_UI/Portrait Parent" unique_id=1291602591]
-texture = ExtResource("4_pa8r4")
-
-[connection signal="body_entered" from="Club/Hurtbox" to="Club" method="_on_hurtbox_body_entered"]
 [connection signal="body_entered" from="Dialogue Area" to="." method="_on_dialogue_area_body_entered"]
 [connection signal="body_exited" from="Dialogue Area" to="." method="_on_dialogue_area_body_exited"]
-[connection signal="dialogue_end" from="Dialogue_UI" to="." method="_on_dialogue_ui_dialogue_end"]
-[connection signal="pressed" from="Dialogue_UI/BG/Button" to="Dialogue_UI" method="_on_button_pressed"]
